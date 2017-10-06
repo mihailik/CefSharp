@@ -118,13 +118,13 @@ namespace CefSharp
 		{
 			var handler = new TaskCompletionCallback();
 
-			if (cookieManager.FlushStore(handler))
+			if (!cookieManager.FlushStore(handler))
 			{
-				return handler.Task;
+				//returns false if cookies cannot be accessed.
+				handler.Dispose();
 			}
 
-			//returns null if cookies cannot be accessed.
-			return null;
+			return handler.Task;
 		}
 	}
 }
